@@ -1,0 +1,25 @@
+# Environnement virtuel Python
+.venv/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+
+# Fichiers générés par Python
+*.egg-info/
+dist/
+build/
+
+# Fichiers de configuration locaux
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
