@@ -1,18 +1,90 @@
-# Duplicate-file-finder
-Tool to find duplicates files
+# Duplicate File Finder
 
-*on utilise les hash des fichiers pour détecter les doublons*
+A Python tool designed to detect duplicate files in a directory using file hashes.
 
-On commence par créer le scanner pour obtenir les fichiers existants
+The goal of this project is to analyze a file system, identify files with exactly the same content, and estimate the disk space that can be recovered by removing unnecessary copies.
 
-2e etape on veut reconnaitre les doublons on veux le hash des fichiers
-on utilise sha et pas md5 car des collisions sont possibles (same hash alors que fichier différents par md5)
+---
 
-on utilise sha 256 et pas sha 512 car plus long (et permet encore plus d'éviter les collisions) mais ici le plus rapide est le 256 dans le projet
+## Features
 
-mnt on veut détecter les fichiers identiques par un dico 
-par hash on aura la liste de ceux avec le meme hash 
+- Recursive directory scanning
+- File discovery and analysis
+- Exclusion of unnecessary folders (`.venv`, `.git`, `__pycache__`)
+- SHA-256 hash calculation
+- Duplicate file detection
+- File grouping based on hash values
+- Recoverable disk space calculation
+- Human-readable file size conversion
+- Command-line usage
 
-mnt on veut ajouter la taille supprimable si on supprime les copies
+---
 
-puis on rajoute la conversion 
+## How It Works
+
+### File Scanning
+
+The first step is to scan a selected directory and retrieve all existing files.
+
+The program recursively explores the directory and its subdirectories using Python's `pathlib` module.
+
+The scanner collects all files that need to be analyzed while ignoring unnecessary folders such as virtual environments and Git metadata.
+
+---
+
+### File Hashing
+
+To identify identical files, the program does not compare the entire content directly.
+
+Instead, it calculates a unique fingerprint called a hash.
+
+A hash is a fixed-size value generated from the content of a file. Two files with exactly the same content will produce the same hash value.
+
+The project uses the SHA-256 algorithm to generate file fingerprints.
+
+---
+
+## Why SHA-256?
+
+Several hashing algorithms exist, such as MD5, SHA-256, and SHA-512.
+
+MD5 was not chosen because it is vulnerable to collision issues. A collision occurs when two different files generate the same hash value, which could lead to incorrect duplicate detection.
+
+SHA-256 was chosen because it provides a strong balance between reliability and performance.
+
+SHA-512 offers a longer hash and an even lower probability of collisions, but it requires more computation. For this project, SHA-256 is fast enough while providing sufficient accuracy for duplicate detection.
+
+---
+
+## Duplicate Detection
+
+After calculating the hash of each file, the program groups files using their hash value.
+
+A dictionary is used to associate each hash with the list of files having the same content.
+
+Files belonging to a group containing multiple entries are considered duplicates.
+
+---
+
+## Recoverable Disk Space
+
+The tool calculates how much storage space can be recovered by removing duplicate copies.
+
+For each duplicate group, the program keeps one file and calculates the space occupied by the unnecessary copies.
+
+---
+
+## File Size Formatting
+
+File sizes are initially retrieved in bytes.
+
+The program converts these values into human-readable units such as KB, MB, and GB to make the results easier to understand.
+
+---
+
+# Installation
+copy the repository then write the : 
+'''bash
+python main.py
+
+Select the directory to analyze and the program will scan the files, calculate their hashes, detect duplicates, and display the recoverable space.
