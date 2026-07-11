@@ -12,3 +12,7 @@ on utilise sha 256 et pas sha 512 car plus long (et permet encore plus d'éviter
 
 mnt on veut détecter les fichiers identiques par un dico 
 par hash on aura la liste de ceux avec le meme hash 
+
+mnt on veut ajouter la taille supprimable si on supprime les copies
+
+puis on rajoute la conversion 

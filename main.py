@@ -13,10 +13,11 @@ for file_hash, files in duplicates.items():
     for file in files:
         print(".", file)
 
-print("Nombre de fichiers :", len(files))
 
-for file in files:
-    print(file)
+from utils import get_file_size, format_size
+for file in files: 
+    size = get_file_size(file)
+    print(file, format_size(size))
 
 #print(f"{len(files)} fichiers trouvés :") #on veut le nombre de fichier
 #for file in files:
